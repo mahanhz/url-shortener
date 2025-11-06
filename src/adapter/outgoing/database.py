@@ -16,12 +16,7 @@ database_url = os.environ.get("DATABASE_URL", settings.DATABASE_URL)
 print(f"database url: {database_url}")
 
 # Create an asynchronous engine for the database
-engine = create_async_engine(
-    database_url,
-    echo=True,
-    future=True,
-    poolclass=NullPool
-)
+engine = create_async_engine(database_url, echo=True, future=True, poolclass=NullPool)
 
 
 # Asynchronous Context manager for handling database sessions

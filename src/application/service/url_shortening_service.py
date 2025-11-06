@@ -10,6 +10,7 @@ from src.application.port.outgoing.url_repository import UrlRepository
 alphabet = string.ascii_lowercase + string.digits
 su = shortuuid.ShortUUID(alphabet=alphabet)
 
+
 class UrlShorteningService(ShorteningService):
     def __init__(self, url_repository: UrlRepository):
         self.url_repository = url_repository

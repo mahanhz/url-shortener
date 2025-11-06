@@ -9,7 +9,11 @@ import pytest
 from testcontainers.postgres import PostgresContainer
 
 from src.adapter.outgoing import database
-from tests_integration.db_setup import create_table, delete_all_urls, create_a_shortened_url
+from tests_integration.db_setup import (
+    create_table,
+    delete_all_urls,
+    create_a_shortened_url,
+)
 
 postgres = PostgresContainer("postgres:16-alpine")
 
@@ -45,15 +49,15 @@ client = TestClient(app)
 
 
 def test_get_all_urls(monkeypatch):
-    create_a_shortened_url(short_code='werlO53k', orig_url='https://www.google.com')
+    create_a_shortened_url(short_code="werlO53k", orig_url="https://www.google.com")
 
     response = client.get("/urls")
     assert response.status_code == 200
-    assert response.json() == {'werlO53k': 'https://www.google.com'}
+    assert response.json() == {"werlO53k": "https://www.google.com"}
 
 
 def test_get_short_url():
-    create_a_shortened_url(short_code='nbsfu87d', orig_url='https://www.gmail.com')
+    create_a_shortened_url(short_code="nbsfu87d", orig_url="https://www.gmail.com")
 
     response = client.get("/urls/nbsfu87d", follow_redirects=False)
     assert response.status_code == 302
@@ -61,10 +65,12 @@ def test_get_short_url():
 
 
 def test_create_short_url():
-    base_url = 'http://testserver/urls/'
+    base_url = "http://testserver/urls/"
     response = client.post("/urls", json={"url": "https://www.bbc.com"})
     assert response.status_code == 201
 
     short_url = str(response.json())
     assert short_url.startswith(base_url)
-    assert len(short_url) - len(base_url) == 8, "URL must end with 8-character short code"
+    assert len(short_url) - len(base_url) == 8, (
+        "URL must end with 8-character short code"
+    )

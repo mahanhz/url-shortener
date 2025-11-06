@@ -28,11 +28,13 @@
 
 ### Running locally
 
+* Add a `.env` file with the contents: `DATABASE_URL=postgresql+asyncpg://urls_user:urls_pass@localhost:5432/url_shortener_db`
 * Start the necessary docker containers: `docker-compose up -d`
 * Run the FastAPI application locally: `uv run fastapi dev` or `.venv/bin/fastapi run main.py`
 * Navigate to http://localhost:8000/docs in your browser to verify that the app is running correctly.
 
 ### Running the full service via Docker Compose
 
+* Add a `.env` file with the contents: `DATABASE_URL=postgresql+asyncpg://urls_user:urls_pass@localhost:5432/url_shortener_db`
 * Run with docker compose: `docker compose -f docker-compose.yml -f url-shortener-sevice.yml up --build -d`
 * Navigate to http://localhost:8000/docs in your browser to verify that the app is running correctly.
