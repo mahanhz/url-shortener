@@ -20,8 +20,3 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(urls.router)
-
-
-# @app.get("/")
-# async def root():
-#     return {"message": "Welcome to the URL shortener!"}

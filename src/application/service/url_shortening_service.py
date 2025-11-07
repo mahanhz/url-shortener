@@ -1,19 +1,16 @@
-import string
 from typing import Dict
 
-import shortuuid
-
 from src.application.port.incoming.ShorteningService import ShorteningService
+from src.application.port.outgoing.short_code_repository import ShortCodeRepository
 from src.application.port.outgoing.url_repository import UrlRepository
 
 
-alphabet = string.ascii_lowercase + string.digits
-su = shortuuid.ShortUUID(alphabet=alphabet)
-
-
 class UrlShorteningService(ShorteningService):
-    def __init__(self, url_repository: UrlRepository):
+    def __init__(
+        self, url_repository: UrlRepository, short_code_repository: ShortCodeRepository
+    ):
         self.url_repository = url_repository
+        self.short_code_repository = short_code_repository
 
     async def list(self) -> Dict[str, str]:
         return await self.url_repository.list()
@@ -22,7 +19,7 @@ class UrlShorteningService(ShorteningService):
         return await self.url_repository.get(short_code)
 
     async def shorten(self, long_url: str) -> str:
-        short_url_code: str = su.random(length=8)
+        short_url_code: str = await self.short_code_repository.short_code()
 
         payload = {
             "original_url": long_url,

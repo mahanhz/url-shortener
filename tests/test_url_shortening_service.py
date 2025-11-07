@@ -18,9 +18,17 @@ def mock_url_repository():
 
 
 @pytest.fixture
-def service(mock_url_repository):
+def mock_short_code_repository():
+    """Creates a mocked async ShortCodeRepository."""
+    mock_repo = AsyncMock()
+    mock_repo.short_code.return_value = "q0VSiWkf"
+    return mock_repo
+
+
+@pytest.fixture
+def service(mock_url_repository, mock_short_code_repository):
     """Injects the mocked repository into the service."""
-    return UrlShorteningService(mock_url_repository)
+    return UrlShorteningService(mock_url_repository, mock_short_code_repository)
 
 
 @pytest.mark.asyncio
@@ -58,6 +66,6 @@ async def test_shorten(service, mock_url_repository):
     payload = args[0]
 
     assert payload["original_url"] == long_url
-    assert payload["short_url_code"] is not None
+    assert payload["short_url_code"] == "q0VSiWkf"
     assert payload["created_by"] == "me@example.com"
     assert result == "yui123"

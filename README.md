@@ -17,11 +17,6 @@
 * Python
 * FastAPI
 * uv - python package and project manager
-  * `uv add fastapi --extra standard`
-  * `uv add --dev ruff`
-  * `uv add --dev pytest`
-  * `uv add sqlmodel asyncpg pydantic-settings`
-
 * ruff - python linter and code formatter
 * pytest
 * testcontainers

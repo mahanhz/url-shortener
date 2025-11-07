@@ -1,6 +1,7 @@
 import os
 from contextlib import asynccontextmanager
 
+import redis
 from sqlalchemy import NullPool
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -8,7 +9,7 @@ from sqlmodel import SQLModel
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from src.adapter.outgoing.url_model import UrlTableModel
-from src.infra.settings import Settings
+from src.config import Settings
 
 settings = Settings()
 
@@ -17,6 +18,11 @@ print(f"database url: {database_url}")
 
 # Create an asynchronous engine for the database
 engine = create_async_engine(database_url, echo=True, future=True, poolclass=NullPool)
+
+redis_host = os.getenv("REDIS_HOST", "localhost")
+redis_port = os.getenv("REDIS_PORT", 6379)
+redis_client = redis.Redis(host=redis_host, port=redis_port, db=0)
+redis_client.set("short_code_counter", 100_000)  # Start the global counter at 100_000
 
 
 # Asynchronous Context manager for handling database sessions
