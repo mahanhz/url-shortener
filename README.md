@@ -21,6 +21,11 @@
 * pytest
 * testcontainers
 
+## Build the repo
+
+1. Install `uv: https://docs.astral.sh/uv/getting-started/installation/
+2. Run `uv sync`
+
 ### Running locally
 
 * Add a `.env` file with the contents: `DATABASE_URL=postgresql+asyncpg://urls_user:urls_pass@localhost:5432/url_shortener_db`
