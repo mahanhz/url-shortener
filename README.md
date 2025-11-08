@@ -23,7 +23,7 @@
 
 ## Build the repo
 
-1. Install `uv: https://docs.astral.sh/uv/getting-started/installation/
+1. Install `uv`: https://docs.astral.sh/uv/getting-started/installation/
 2. Run `uv sync`
 
 ### Running locally
