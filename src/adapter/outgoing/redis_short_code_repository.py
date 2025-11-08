@@ -11,14 +11,11 @@ BASE62_ALPHABET = string.digits + string.ascii_lowercase + string.ascii_uppercas
 
 class RedisShortCodeRepository(ShortCodeRepository):
     async def short_code(self) -> str:
-        return base62_short_code(redis_client, "short_code_counter")
+        counter = redis_client.incr("short_code_counter")
+        return base62_short_code(counter)
 
 
-def base62_short_code(client, counter_key: str) -> str:
-    """Increment a global counter in Redis and return a zero-padded Base62 string (8 chars)."""
-    # Atomically increment the counter
-    counter = client.incr(counter_key)
-
+def base62_short_code(counter: int) -> str:
     # Convert counter to Base62
     base62_id = encode_base62(counter)
 
