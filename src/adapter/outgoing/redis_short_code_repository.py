@@ -19,13 +19,12 @@ def base62_short_code(counter: int) -> str:
     # Convert counter to Base62
     base62_id = encode_base62(counter)
 
-    # If shorter than 8 chars, pad with random Base62 chars on the left (or right)
+    # If shorter than 8 chars, pad with random Base62 chars
     if len(base62_id) < 8:
         pad_length = 8 - len(base62_id)
         random_padding = "".join(random.choices(BASE62_ALPHABET, k=pad_length))
-        base62_id = base62_id + random_padding  # pad on right if preferred
+        base62_id = base62_id + random_padding
 
-    # Pad with leading zeros (or '0' in Base62 alphabet) to ensure 8 chars
     return base62_id
 
 
